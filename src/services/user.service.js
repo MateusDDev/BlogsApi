@@ -1,5 +1,7 @@
 const { User } = require('../models');
 const { generateToken } = require('./login.service');
+const { validateNewUser } = require('./validations/userValidations');
+const { messagesHTTP } = require('../utils/mapHTTP');
 
 const getAll = async () => {
   const users = await User.findAll();
@@ -13,12 +15,23 @@ const findByEmail = async (email) => {
 
 const create = async (user) => {
   try {
+    const error = validateNewUser(user);
+    if (error) {
+      return { status: messagesHTTP.BAD_REQUEST, data: error };
+    }
+
+    const dbUser = await findByEmail(user.email);
+
+    if (dbUser) {
+      return { status: messagesHTTP.CONFLICT, data: { message: 'User already registered' } };
+    }
+
     await User.create(user);
     const data = {
       userId: user.id,
     };
     const token = generateToken({ data });
-    return token;
+    return { status: messagesHTTP.CREATED, data: { token } };
   } catch (error) {
     return error;
   }
