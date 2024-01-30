@@ -2,6 +2,14 @@ const { messagesHTTP } = require('../utils/mapHTTP');
 const { validateNewCategory } = require('./validations/inputValidations');
 const { Category } = require('../models');
 
+const findAll = async () => {
+  const categories = await Category.findAll();
+  return {
+    status: messagesHTTP.SUCCESS,
+    data: categories,
+  };
+};
+
 const create = async (category) => {
   const error = validateNewCategory(category);
   if (error) {
@@ -20,5 +28,6 @@ const create = async (category) => {
 };
 
 module.exports = {
+  findAll,
   create,
 };
