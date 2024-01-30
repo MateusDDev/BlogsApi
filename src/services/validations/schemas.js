@@ -13,4 +13,13 @@ const addUserSchema = Joi.object({
   image: Joi.string(),
 });
 
-module.exports = { addUserSchema };
+const addCategorySchema = Joi.object({
+  name: Joi.string().required().messages({
+    'any.required': '"name" is required',
+  }),
+});
+
+module.exports = { 
+  addUserSchema,
+  addCategorySchema,
+};

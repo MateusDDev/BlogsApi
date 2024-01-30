@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { validateNewUser } = require('./validations/userValidations');
+const { validateNewUser } = require('./validations/inputValidations');
 const { messagesHTTP } = require('../utils/mapHTTP');
 const { generateToken } = require('./login.service');
 
