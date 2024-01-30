@@ -4,8 +4,14 @@ const { messagesHTTP } = require('../utils/mapHTTP');
 const { generateToken } = require('./login.service');
 
 const getAll = async () => {
-  const users = await User.findAll();
-  return users;
+  try {
+    const users = await User.findAll({
+      attributes: { exclude: 'password' },
+    });
+    return { status: messagesHTTP.SUCCESS, data: users };
+  } catch (error) {
+    return { error };
+  }
 };
 
 const findByEmail = async (email) => {
@@ -15,11 +21,8 @@ const findByEmail = async (email) => {
 
 const findById = async (id) => {
   try {
-    const user = await User.findOne({ where: id });
-    return {
-      status: messagesHTTP.SUCCESS,
-      data: { user },
-    };
+    const user = await User.findOne({ where: { id } });
+    return { status: messagesHTTP.SUCCESS, data: user };
   } catch (error) {
     return { error };
   }
