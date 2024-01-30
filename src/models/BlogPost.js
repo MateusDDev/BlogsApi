@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) => {
             },
             userId: {
                 type: DataTypes.INTEGER,
-                foreignKey: true,
+                references: {
+                    model: 'users',
+                    key: 'id',
+                }
             },
             published: {
                 type: DataTypes.DATE,
