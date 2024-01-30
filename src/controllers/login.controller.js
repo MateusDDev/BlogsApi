@@ -1,5 +1,5 @@
 const { userService } = require('../services');
-const { generateToken } = require('../services/login.service');
+const { loginService } = require('../services');
 
 const isBodyValid = (email, password) => email && password;
 
@@ -21,7 +21,7 @@ const getLogin = async (req, res) => {
       userId: dbUser.id,
     };
 
-    const token = generateToken({ data });
+    const token = loginService.generateToken({ data });
 
     return res.status(200).json({ token });
   } catch (error) {

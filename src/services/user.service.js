@@ -1,7 +1,7 @@
 const { User } = require('../models');
-const { generateToken } = require('./login.service');
 const { validateNewUser } = require('./validations/userValidations');
 const { messagesHTTP } = require('../utils/mapHTTP');
+const { generateToken } = require('./login.service');
 
 const getAll = async () => {
   const users = await User.findAll();
@@ -11,6 +11,18 @@ const getAll = async () => {
 const findByEmail = async (email) => {
   const user = await User.findOne({ where: { email } });
   return user;
+};
+
+const findById = async (id) => {
+  try {
+    const user = await User.findOne({ where: id });
+    return {
+      status: messagesHTTP.SUCCESS,
+      data: { user },
+    };
+  } catch (error) {
+    return { error };
+  }
 };
 
 const create = async (user) => {
@@ -33,12 +45,13 @@ const create = async (user) => {
     const token = generateToken({ data });
     return { status: messagesHTTP.CREATED, data: { token } };
   } catch (error) {
-    return error;
+    return { error };
   }
 };
 
 module.exports = {
   getAll,
   findByEmail,
+  findById,
   create,
 };

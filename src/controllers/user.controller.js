@@ -2,7 +2,7 @@ const { userService } = require('../services');
 const { mapStatusHTTP } = require('../utils/mapHTTP');
 
 const getAllUsers = async (req, res) => {
-  const users = await userService.getAllUsers();
+  const users = await userService.getAll();
   return res.status(200).json({ users });
 };
 

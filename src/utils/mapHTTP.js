@@ -3,6 +3,7 @@ const messagesHTTP = {
   CONFLICT: 'CONFLICT',
   CREATED: 'CREATED',
   BAD_REQUEST: 'BAD_REQUEST',
+  UNAUTHORIZED: 'UNAUTHORIZED',
 };
   
 const httpMap = {
@@ -10,6 +11,7 @@ const httpMap = {
   [messagesHTTP.CONFLICT]: 409,
   [messagesHTTP.CREATED]: 201,
   [messagesHTTP.BAD_REQUEST]: 400,
+  [messagesHTTP.UNAUTHORIZED]: 401,
 };
   
 const mapStatusHTTP = (status) => httpMap[status] || 500;

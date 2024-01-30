@@ -9,7 +9,10 @@ const jwtConfig = {
 
 const generateToken = (data) => jwt.sign(data, SECRET, jwtConfig);
 
-const decodeToken = (token) => jwt.verify(token, SECRET);
+const decodeToken = (bearerToken) => {
+  const token = bearerToken.split(' ')[1];
+  return jwt.verify(token, SECRET);
+};
 
 module.exports = {
   generateToken,
