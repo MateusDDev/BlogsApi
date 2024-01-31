@@ -1,4 +1,4 @@
-const { addUserSchema, addCategorySchema, addBlogPost } = require('./schemas');
+const { addUserSchema, addCategorySchema, addBlogPost, editBlogPost } = require('./schemas');
 
 const validateNewUser = (user) => {
   const { error } = addUserSchema.validate(user);
@@ -17,8 +17,15 @@ const validateNewBlogPost = (post) => {
   if (error) return { message: error.message };
 };
 
+const validateEditBlogPost = (newContent) => {
+  const { error } = editBlogPost.validate(newContent);
+
+  if (error) return { message: error.message };
+};
+
 module.exports = {
   validateNewUser,
   validateNewCategory,
   validateNewBlogPost,
+  validateEditBlogPost,
 };

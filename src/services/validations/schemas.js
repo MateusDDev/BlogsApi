@@ -27,8 +27,16 @@ const addBlogPost = Joi.object({
   'string.empty': 'Some required fields are missing',
 });
 
+const editBlogPost = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+}).messages({
+  'string.empty': 'Some required fields are missing',
+});
+
 module.exports = { 
   addUserSchema,
   addCategorySchema,
   addBlogPost,
+  editBlogPost,
 };
