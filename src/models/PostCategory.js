@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         {
             postId: {
                 type: DataTypes.INTEGER,
+                primarykey: true,
                 references: {
                     model: 'blog_posts',
                     key: 'id',
@@ -11,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             categoryId: {
                 type: DataTypes.INTEGER,
+                primarykey: true,
                 references: {
                     model: 'categories',
                     key: 'id',
@@ -26,15 +28,15 @@ module.exports = (sequelize, DataTypes) => {
 
     PostCategory.associate = ({ BlogPost, Category }) => {
         Category.belongsToMany(BlogPost, {
-            through: 'posts_categories',
-            foreignKey: 'postId',
-            otherKey: 'id',
+            through: PostCategory,
+            foreignKey: 'categoryId',
+            otherKey: 'postId',
             as: 'posts'
         });
         BlogPost.belongsToMany(Category, {
-            through: 'posts_categories',
-            foreignKey: 'categoryId',
-            otherKey: 'id',
+            through: PostCategory,
+            foreignKey: 'postId',
+            otherKey: 'categoryId',
             as: 'categories'
         });
     }

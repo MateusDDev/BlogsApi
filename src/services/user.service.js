@@ -17,7 +17,7 @@ const findByEmail = async (email) => {
 
 const findById = async (id) => {
   const user = await User.findOne({
-    where: id,
+    where: { id },
     attributes: { exclude: ['password'] },
   });
 
@@ -39,9 +39,9 @@ const create = async (user) => {
     return { status: messagesHTTP.CONFLICT, data: { message: 'User already registered' } };
   }
 
-  await User.create(user);
+  const newUser = await User.create(user);
   const data = {
-    userId: user.id,
+    userId: newUser.id,
   };
   const token = generateToken({ data });
   return { status: messagesHTTP.CREATED, data: { token } };
