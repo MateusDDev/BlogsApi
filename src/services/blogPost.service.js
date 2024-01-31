@@ -4,9 +4,7 @@ const { validateNewBlogPost } = require('./validations/inputValidations');
 
 const newBlogPost = async (blogPost, userId) => {
   const error = validateNewBlogPost(blogPost);
-  if (error) {
-    return { status: messagesHTTP.BAD_REQUEST, data: error };
-  }
+  if (error) return { status: messagesHTTP.BAD_REQUEST, data: error };
 
   const newPost = {
     ...blogPost,
@@ -17,10 +15,7 @@ const newBlogPost = async (blogPost, userId) => {
 
   const post = await BlogPost.create(newPost);
 
-  return {
-    status: messagesHTTP.CREATED,
-    data: post,
-  };
+  return { status: messagesHTTP.CREATED, data: post };
 };
 
 const newPostCategory = async (postId, categories) => {
@@ -35,7 +30,7 @@ const newPostCategory = async (postId, categories) => {
     postId,
     categoryId: id,
   }));
-  console.log(items);
+
   await PostCategory.bulkCreate(items, {
     fields: ['postId', 'categoryId'],
   });

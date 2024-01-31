@@ -1,4 +1,4 @@
-const { blogPostService } = require('../services');
+const { blogPostService, extendsBlogPostService } = require('../services');
 const { mapStatusHTTP } = require('../utils/mapHTTP');
 
 const createBlogPost = async (req, res) => {
@@ -13,6 +13,16 @@ const createBlogPost = async (req, res) => {
   }
 };
 
+const getAllBlogPosts = async (req, res) => {
+  try {
+    const { status, data } = await extendsBlogPostService.findAll();
+    return res.status(mapStatusHTTP(status)).json(data);
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal error', error: error.message });
+  }
+};
+
 module.exports = {
   createBlogPost,
+  getAllBlogPosts,
 };
